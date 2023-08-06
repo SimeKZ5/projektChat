@@ -1,21 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { UserContext } from "./UserContext";
 
 function LoginScreen() {
   const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const { addUser } = useContext(UserContext);
 
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
   };
 
-  const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
-  };
-
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log("Username:", username);
-    console.log("Password:", password);
+    if (username.trim() !== "") {
+      const newUser = {
+        id: Date.now(),
+        name: username,
+        color: getRandomColor(),
+      };
+      addUser(newUser);
+    }
   };
 
   return (
@@ -35,13 +38,6 @@ function LoginScreen() {
           value={username}
           onChange={handleUsernameChange}
         />
-        <input
-          className="w-full"
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={handlePasswordChange}
-        />
         <button
           type="submit"
           className="bg-blue-500 text-white px-4 py-2 rounded-md"
@@ -53,4 +49,12 @@ function LoginScreen() {
   );
 }
 
+function getRandomColor() {
+  const letters = "0123456789ABCDEF";
+  let color = "#";
+  for (let i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
 export default LoginScreen;

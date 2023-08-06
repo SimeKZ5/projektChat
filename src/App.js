@@ -1,13 +1,14 @@
 import React from "react";
 import LoginScreen from "./components/Login/LoginScreen";
 import Chat from "./components/Chat/ChatPart/Chat";
-import Users from "./components/Chat/UserPart/Users";
+import { UserProvider } from "./components/Login/UserContext";
 
 function App() {
   return (
-    <div className="container flex justify-center items-center">
+    <UserProvider className="container flex justify-center items-center">
+      <LoginScreen />
       <Chat />
-    </div>
+    </UserProvider>
   );
 }
 
